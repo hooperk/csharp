@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace Assignment_Fiddling
 {
-    struct Entry
+    public class Entry
     {
         String Name { get; set; }
         DateTime Date { get; set; }
@@ -31,7 +32,18 @@ namespace Assignment_Fiddling
                 + Environment.NewLine + "\"" + Price + "\"" + Environment.NewLine + "\"");
             foreach (Boolean b in Booked)
                 output.Append(b ? "B" : "F");
-            output.Append("\"");
+            output.Append("\"" + Environment.NewLine);
+            return output.ToString();
+        }
+   
+    }
+
+    public static class EntryExtension{
+        public static String GetAllEntries(this IEnumerable<Entry> self)
+        {
+            StringBuilder output = new StringBuilder("");
+            foreach (Entry e in self)
+                output.Append(e.ToString());
             return output.ToString();
         }
     }
