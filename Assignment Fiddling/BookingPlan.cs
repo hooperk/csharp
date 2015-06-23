@@ -20,6 +20,7 @@ namespace Assignment_Fiddling
     {
         private static readonly Color selected = Color.FromArgb(0, 255, 0);
         private static readonly Font printFont = new Font("Arial", 11);
+        private PrintPreviewDialog printDialog = new PrintPreviewDialog();
 
         private Entry[] classes;
         private String lecture = "";
@@ -120,12 +121,15 @@ namespace Assignment_Fiddling
             {
                 PrintDocument printer = new PrintDocument();
                 printer.PrintPage += new PrintPageEventHandler(this.PrintPage);
-                printer.Print();
+                printDialog.Document = printer;
+                printDialog.ShowDialog();
             }
         }
 
-
-
+        /// <summary>
+        /// Method to actually perform the printing of the print document
+        /// </summary>
+        /// <param name="ev">Arguments for event</param>
         private void PrintPage(object sender, PrintPageEventArgs ev)
         {
             float linesPerPage = 0;
