@@ -113,6 +113,7 @@ namespace Assignment_Fiddling
         /// <summary>
         /// Draw the fields, rows are 0 indexed
         /// </summary>
+        /// <param name="rows">number of rows to be added</param>
         private void InitializeComponent(decimal rows)
         {
             this.label1 = new System.Windows.Forms.Label();
@@ -355,6 +356,7 @@ namespace Assignment_Fiddling
                 this.label5.Size = new System.Drawing.Size(73, 13);
                 this.label5.TabIndex = 16;
                 this.label5.Text = "XX/XX/XXXX";
+                this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
                 // 
                 // label6
                 // 

@@ -6,10 +6,10 @@ namespace Assignment_Fiddling
 {
     public class Entry
     {
-        String Name { get; set; }
-        DateTime Date { get; set; }
-        String Price { get; set; }
-        Boolean[] Booked { get; set; }
+        public String Name { get; set; }
+        public DateTime Date { get; set; }
+        public String Price { get; set; }
+        public Boolean[] Booked { get; set; }
 
         public Entry(String name, String date, String price, String booked)
         {

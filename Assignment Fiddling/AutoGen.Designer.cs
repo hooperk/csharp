@@ -330,6 +330,7 @@
             this.label5.Size = new System.Drawing.Size(73, 13);
             this.label5.TabIndex = 16;
             this.label5.Text = "XX/XX/XXXX";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label6
             // 

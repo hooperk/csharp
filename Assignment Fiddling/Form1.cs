@@ -37,7 +37,12 @@ namespace Assignment_Fiddling
 
         private void button2_Click(object sender, EventArgs e)
         {
-            Form dynamic = new SeatingPlan(numericUpDown1.Value);
+            List<Entry> classes = new List<Entry>((int)numericUpDown1.Value);
+            for (int i = 0; i < (int)numericUpDown1.Value; i++)
+            {
+                classes.Add(entries[i]);
+            }
+            Form dynamic = new BookingPlan(classes.ToArray());
             dynamic.ShowDialog();
         }
     }
