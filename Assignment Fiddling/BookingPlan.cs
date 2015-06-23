@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Printing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,12 +12,19 @@ using System.Windows.Forms;
 
 namespace Assignment_Fiddling
 {
+    /// <summary>
+    /// Class for dynamically generated form showing a maximum of ten classes with 1 seats available in each
+    /// </summary>
+    /// <author>Kenneth Hooper</author>
     class BookingPlan : Form
     {
-        private static Color selected = Color.FromArgb(0, 255, 0);
-        
+        private static readonly Color selected = Color.FromArgb(0, 255, 0);
+        private static readonly Font printFont = new Font("Arial", 11);
+
         private Entry[] classes;
         private String lecture = "";
+        private StringReader toPrint;
+        
 
         /// <summary>
         /// Create the Booking Plan form from an array of classes
@@ -34,7 +43,7 @@ namespace Assignment_Fiddling
         /// </summary>
         /// <param name="sender">The Button</param>
         /// <param name="e">Eventargs</param>
-        private void seat_Click(object sender, EventArgs e)
+        private void Seat_Click(object sender, EventArgs e)
         {
             Button target = sender as Button;
             if (target != null)
@@ -73,7 +82,7 @@ namespace Assignment_Fiddling
         public static void Unset(Button self, int id)
         {
             self.UseVisualStyleBackColor = true;
-            self.Text = (id+1).ToString();
+            self.Text = (id + 1).ToString();
         }
 
         /// <summary>
@@ -93,7 +102,60 @@ namespace Assignment_Fiddling
         /// <param name="e">Eventargs</param>
         private void print_all(object sender, EventArgs e)
         {
-            //Print all booking forms
+            StringBuilder output = new StringBuilder();
+            foreach (Entry entry in classes)
+            {
+                for(int i = 0; i < 12; i++)
+                {
+                    if (entry.Booked[i])
+                    {
+                        output.AppendLine("BOOKING NUMBER: " + (i + 1) + " " + entry.Name + Environment.NewLine
+                            + "Date: " + entry.GetDate() + Environment.NewLine + "Cost: " + entry.Price + Environment.NewLine
+                            + "------------------------------------------------------------");
+                    }
+                }
+            }
+            //for the print dialog
+            using (toPrint = new StringReader(output.ToString()))
+            {
+                PrintDocument printer = new PrintDocument();
+                printer.PrintPage += new PrintPageEventHandler(this.PrintPage);
+                printer.Print();
+            }
+        }
+
+
+
+        private void PrintPage(object sender, PrintPageEventArgs ev)
+        {
+            float linesPerPage = 0;
+            int entriesPerPage = 0;
+            float yPos = 0;
+            int count = 0;
+            float leftMargin = ev.MarginBounds.Left;
+            float topMargin = ev.MarginBounds.Top;
+            string line = null;
+
+            // Calculate the number of lines per page.
+            linesPerPage = ev.MarginBounds.Height / printFont.GetHeight(ev.Graphics);
+            entriesPerPage = (int)(linesPerPage / 4);
+
+            // Print each line of the file. 
+            while (count < linesPerPage && (count / 4) < entriesPerPage && //make sure the full entry will fit on a page
+                (line = toPrint.ReadLine()) != null)
+            {
+                yPos = topMargin + (count *
+                   printFont.GetHeight(ev.Graphics));
+                ev.Graphics.DrawString(line, printFont, Brushes.Black,
+                   leftMargin, yPos, new StringFormat());
+                count++;
+            }
+
+            // If more lines exist, print another page. 
+            if (line != null)
+                ev.HasMorePages = true;
+            else
+                ev.HasMorePages = false;
         }
 
         /// <summary>
@@ -193,24 +255,28 @@ namespace Assignment_Fiddling
             int count = 5;//tabindex of items
             for (int i = 0; i < rows; i++)
             {
+                //
                 //12 buttons
+                //
                 for (int j = 0; j < 12; j++)
                 {
                     Button latest = new System.Windows.Forms.Button();
-                    latest.Location = new System.Drawing.Point(10 + (j*34), 62 + (i*29));
-                    latest.Name = "seat" + ((i*12)+j).ToString();
+                    latest.Location = new System.Drawing.Point(10 + (j * 34), 62 + (i * 29));
+                    latest.Name = "seat" + ((i * 12) + j).ToString();
                     latest.Size = new System.Drawing.Size(28, 23);
                     latest.TabIndex = count++;//increment count after each button
                     latest.BackColor = selected;
                     Toggle(latest, classes[i].Booked[j], j);
-                    latest.Click += seat_Click;
+                    latest.Click += Seat_Click;
                     rowButtons.Add(latest);
                     this.Controls.Add(latest);
                 }
+                //
                 //date
+                //
                 Label date = new System.Windows.Forms.Label();
-                date.AutoSize = false;
-                date.Location = new System.Drawing.Point(422, 67 + (i*29));
+                date.AutoSize = true;
+                date.Location = new System.Drawing.Point(422, 67 + (i * 29));
                 date.Name = "date" + i;
                 date.Size = new System.Drawing.Size(51, 13);
                 date.TabIndex = count++;
@@ -218,10 +284,12 @@ namespace Assignment_Fiddling
                 date.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
                 rowLabels.Add(date);
                 this.Controls.Add(date);
+                //
                 //cost per person
+                //
                 Label price = new System.Windows.Forms.Label();
-                price.AutoSize = false;
-                price.Location = new System.Drawing.Point(501, 67 + (i*29));
+                price.AutoSize = true;
+                price.Location = new System.Drawing.Point(501, 67 + (i * 29));
                 price.Name = "price" + i;
                 price.Size = new System.Drawing.Size(51, 13);
                 price.TabIndex = count++;
@@ -230,11 +298,11 @@ namespace Assignment_Fiddling
                 this.Controls.Add(price);
             }
             #endregion
-                #region Constant Buttons
-                // 
-                // button121
-                // 
-                this.button121 = new System.Windows.Forms.Button();
+            #region Constant Buttons
+            // 
+            // button121
+            // 
+            this.button121 = new System.Windows.Forms.Button();
             this.button121.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button121.Location = new System.Drawing.Point(310, 356);
             this.button121.Name = "button121";
