@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace Assignment_Fiddling
 {
@@ -37,13 +38,28 @@ namespace Assignment_Fiddling
 
         private void button2_Click(object sender, EventArgs e)
         {
-            List<Entry> classes = new List<Entry>((int)numericUpDown1.Value);
-            for (int i = 0; i < (int)numericUpDown1.Value; i++)
-            {
-                classes.Add(entries[i]);
-            }
-            Form dynamic = new BookingPlan(classes.ToArray());
+            Form dynamic = new BookingPlan(entries.Where(entry => entry.Name == entries.First().Name).ToArray());
             dynamic.ShowDialog();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog newFile = new SaveFileDialog();
+            newFile.Filter = "Text Files (.txt)|*.txt|All Files (*.*)|*.*";
+            newFile.FilterIndex = 1;
+            newFile.DefaultExt = ".txt";
+            newFile.FileName = "Courses.txt";
+            DialogResult result = newFile.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                ClassGenerator generator = new ClassGenerator();
+                entries = generator.Generate((int)numericUpDown1.Value);
+                using (FileStream location = File.Create(newFile.FileName))
+                using (StreamWriter writer = new StreamWriter(location))
+                {
+                    writer.Write(entries.GetAllEntries());
+                }
+            }
         }
     }
 }

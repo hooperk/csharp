@@ -33,6 +33,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.printDialog1 = new System.Windows.Forms.PrintDialog();
+            this.button3 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -48,17 +49,12 @@
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(189, 41);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
+            this.numericUpDown1.Location = new System.Drawing.Point(215, 41);
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(120, 20);
             this.numericUpDown1.TabIndex = 1;
             this.numericUpDown1.Value = new decimal(new int[] {
-            10,
+            25,
             0,
             0,
             0});
@@ -68,9 +64,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(12, 43);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(171, 13);
+            this.label1.Size = new System.Drawing.Size(197, 13);
             this.label1.TabIndex = 2;
-            this.label1.Text = "How many rows should be shown?";
+            this.label1.Text = "How many entries should be generated?";
             // 
             // button2
             // 
@@ -86,11 +82,22 @@
             // 
             this.printDialog1.UseEXDialog = true;
             // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(342, 42);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(164, 23);
+            this.button3.TabIndex = 4;
+            this.button3.Text = "Create Classes";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(518, 98);
+            this.ClientSize = new System.Drawing.Size(518, 103);
+            this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.numericUpDown1);
@@ -110,6 +117,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.PrintDialog printDialog1;
+        private System.Windows.Forms.Button button3;
     }
 }
 

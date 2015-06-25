@@ -50,7 +50,9 @@
     <Compile Include="AutoGen.Designer.cs">
       <DependentUpon>AutoGen.cs</DependentUpon>
     </Compile>
+    <Compile Include="BookingException.cs" />
     <Compile Include="BookingPlan.cs" />
+    <Compile Include="ClassGenerator.cs" />
     <Compile Include="Entry.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
