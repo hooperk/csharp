@@ -8,7 +8,7 @@ namespace Assignment_Fiddling
 {
     class ClassGenerator
     {
-        Tuple<String, List<DateTime>>[] classes;
+        Tuple<String, List<DateTime>>[] classes;//store used dates for classes
         Random gen;
 
         public ClassGenerator()
@@ -32,6 +32,9 @@ namespace Assignment_Fiddling
             reset();
         }
 
+        /// <summary>
+        /// Clear all the used dates, reset random number generator
+        /// </summary>
         void reset()
         {
             for (int i = 0; i < 15; i++)
@@ -39,6 +42,11 @@ namespace Assignment_Fiddling
             gen = new Random();
         }
 
+        /// <summary>
+        /// Generate a new list of classes
+        /// </summary>
+        /// <param name="size">number of classes to create</param>
+        /// <returns>An array of classes</returns>
         public Entry[] Generate(int size)
         {
             Entry[] entries = new Entry[size];
@@ -57,26 +65,32 @@ namespace Assignment_Fiddling
                     date = RandomDay();
                 } while (classes[choice].Item2.Contains(date));//make random dates until you find an unused one
                 classes[choice].Item2.Add(date);
-                price = 0.05m * (4000 + gen.Next(11001));//€200 - €750
+                price = 0.05m * (4000 + gen.Next(12001));//€200 - €800
                 bool filled = gen.NextDouble() < 0.4;//60% chance to be empty
                 for (int j = 0; j < 12; j++)
                 {
                     booked[j] = (filled && gen.NextDouble() > 0.5 ? 'B' : 'F');//if empty, Free, else 50% chance of either
                 }
-                current = new Entry("\"" + classes[choice].Item1 + "\"",
-                    "\"" + date.ToString("d") + "\"",
-                    "\"" + price.ToString("C") + "\"",
-                    "\"" + new String(booked) + "\"");
+                current = new Entry(
+                    Entry.Wrap(classes[choice].Item1),
+                    Entry.Wrap(date.ToString("d")),
+                    Entry.Wrap(price.ToString("C")),
+                    Entry.Wrap(new String(booked))
+                );
                 entries[i] = current;
             }
             return entries;
         }
 
+        /// <summary>
+        /// Choose a random date
+        /// </summary>
+        /// <returns>Random date in the period august 2015 to december 2016</returns>
         DateTime RandomDay()
         {
             DateTime start = new DateTime(2015, 8, 1);
 
-            int range = (new DateTime(2017, 12,31) - start).Days;
+            int range = (new DateTime(2016, 12,31) - start).Days;
             return start.AddDays(gen.Next(range));
         }
     }
