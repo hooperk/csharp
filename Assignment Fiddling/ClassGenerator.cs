@@ -72,10 +72,10 @@ namespace Assignment_Fiddling
                     booked[j] = (filled && gen.NextDouble() > 0.5 ? 'B' : 'F');//if empty, Free, else 50% chance of either
                 }
                 current = new Entry(
-                    Entry.Wrap(classes[choice].Item1),
-                    Entry.Wrap(date.ToString("d")),
-                    Entry.Wrap(price.ToString("C")),
-                    Entry.Wrap(new String(booked))
+                    Wrap(classes[choice].Item1),
+                    Wrap(date.ToString("d")),
+                    Wrap("€" + price.ToString("G")),
+                    Wrap(new String(booked))
                 );
                 entries[i] = current;
             }
@@ -92,6 +92,16 @@ namespace Assignment_Fiddling
 
             int range = (new DateTime(2016, 12,31) - start).Days;
             return start.AddDays(gen.Next(range));
+        }
+
+        /// <summary>
+        /// Wrap a line in quotation marks
+        /// </summary>
+        /// <param name="input">string to wrap</param>
+        /// <returns>A quoted string</returns>
+        public static String Wrap(String input)
+        {
+            return "\"" + input + "\"";
         }
     }
 }

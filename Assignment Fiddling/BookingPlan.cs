@@ -25,12 +25,17 @@ namespace Assignment_Fiddling
         private Entry[] classes;
         private String lecture = "";
         private StringReader toPrint;
-        
+
+        /// <summary>
+        /// Create the Booking Plan form from an enumeration of classes
+        /// </summary>
+        /// <param name="entries">Enumeration of entries in booking form</param>
+        public BookingPlan(IEnumerable<Entry> entries) : this(entries.ToArray()) { }
 
         /// <summary>
         /// Create the Booking Plan form from an array of classes
         /// </summary>
-        /// <param name="entries">List of entries in booking form</param>
+        /// <param name="entries">Array of entries in booking form</param>
         public BookingPlan(Entry[] entries)
         {
             classes = entries;
@@ -130,6 +135,7 @@ namespace Assignment_Fiddling
         /// Method to actually perform the printing of the print document
         /// </summary>
         /// <param name="ev">Arguments for event</param>
+        /// <example href="https://msdn.microsoft.com/en-us/library/system.drawing.printing.printdocument(v=vs.110).aspx"/>
         private void PrintPage(object sender, PrintPageEventArgs ev)
         {
             float linesPerPage = 0;

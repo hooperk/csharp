@@ -97,6 +97,16 @@ namespace Assignment_Fiddling
         }
 
         /// <summary>
+        /// Save the entries to a file
+        /// </summary>
+        /// <param name="self">Entry enumeration</param>
+        /// <param name="path">path to save to</param>
+        public static void SaveFile(IEnumerable<Entry> self, String path)
+        {
+            self.SaveFile(path);
+        }
+
+        /// <summary>
         /// Wrap a line in quotation marks
         /// </summary>
         /// <param name="input">string to wrap</param>
@@ -120,6 +130,20 @@ namespace Assignment_Fiddling
             foreach (Entry e in self)
                 output.Append(e.ToString());
             return output.ToString();
+        }
+
+        /// <summary>
+        /// Save the entries to a file
+        /// </summary>
+        /// <param name="self">Entry enumeration</param>
+        /// <param name="path">path to save to</param>
+        public static void SaveFile(this IEnumerable<Entry> self, String path)
+        {
+            using (FileStream location = File.Create(path))
+            using (StreamWriter writer = new StreamWriter(location))
+            {
+                writer.Write(self.GetAllEntries());
+            }
         }
     }
 }
