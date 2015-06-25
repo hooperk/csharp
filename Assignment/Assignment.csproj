@@ -55,10 +55,19 @@
       <DependentUpon>Course Booker 9001.cs</DependentUpon>
     </Compile>
     <Compile Include="Entry.cs" />
+    <Compile Include="NewCourses.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewCourses.Designer.cs">
+      <DependentUpon>NewCourses.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Course Booker 9001.resx">
       <DependentUpon>Course Booker 9001.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewCourses.resx">
+      <DependentUpon>NewCourses.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
