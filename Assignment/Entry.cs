@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace Assignment_Fiddling
+namespace Assignment
 {
     public class Entry
     {

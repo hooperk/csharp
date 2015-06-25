@@ -38,7 +38,7 @@ namespace Assignment_Fiddling
 
         private void button2_Click(object sender, EventArgs e)
         {
-            Form dynamic = new BookingPlan(entries.Where(entry => entry.Name == entries.First().Name).ToArray());
+            Form dynamic = new BookingPlan(entries.Where(entry => entry.Name == entries.First().Name));
             dynamic.ShowDialog();
         }
 
@@ -55,6 +55,12 @@ namespace Assignment_Fiddling
                 entries = generator.Generate((int)numericUpDown1.Value);
                 entries.SaveFile(newFile.FileName);
             }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Course_Booker_9001 form = new Course_Booker_9001();
+            form.ShowDialog();
         }
     }
 }
