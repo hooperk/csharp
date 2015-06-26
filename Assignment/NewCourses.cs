@@ -36,9 +36,17 @@ namespace Assignment
         }
 
         //When an item is selected from the list, set textbox to it
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void listBox1_Click(object sender, EventArgs e)
         {
-            textBox1.Text = entries[listBox1.SelectedIndex].Name;
+            if (listBox1.SelectedIndex != -1)
+            {
+                //Check that an item was actually selected
+                Rectangle selected = listBox1.GetItemRectangle(listBox1.SelectedIndex);
+                if (selected.Contains(listBox1.PointToClient(Cursor.Position)))
+                {
+                    textBox1.Text = entries[listBox1.SelectedIndex].Name;
+                }
+            }
         }
 
         /// <summary>
@@ -95,24 +103,7 @@ namespace Assignment
         //event that resets the label
         private void resetEvent(object sender, EventArgs e)
         {
-            if (this.InvokeRequired)
-            {
-                /* Not on UI thread, reenter there... */
-                this.BeginInvoke(new EventHandler(resetEvent), sender, e);
-            }
-            else
-            {
-                lock (eventTimer)
-                {
-                    /* only work when this is no reentry while we are already working */
-                    if (eventTimer.Enabled)
-                    {
-                        eventTimer.Stop();
-                        label4.Text = LabelText;
-                        eventTimer.Enabled = false;
-                    }
-                }
-            }
+
         }
 
         //close button
