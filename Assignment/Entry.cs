@@ -5,12 +5,43 @@ using System.Text;
 
 namespace Assignment
 {
+    /// <summary>
+    /// Data structure for courses with methods for opening, saving and parsing
+    /// </summary>
     public class Entry
     {
+        /// <summary>
+        /// Course Name
+        /// </summary>
         public String Name { get; set; }
+        /// <summary>
+        /// Date the course will run on
+        /// </summary>
         public DateTime Date { get; set; }
+        /// <summary>
+        /// Cost per person of the Course
+        /// </summary>
         public String Price { get; set; }
+        /// <summary>
+        /// Array of the available seats showign if they are already booked
+        /// </summary>
         public Boolean[] Booked { get; set; }
+
+        /// <summary>
+        /// Create a new empty course from 3 lines
+        /// </summary>
+        /// <param name="name">Name of the course</param>
+        /// <param name="date">Date of the course</param>
+        /// <param name="price">Cost for the Course</param>
+        public Entry(String name, String date, String price)
+        {
+            Name = name;
+            Date = DateTime.Parse(date);
+            Price = price;
+            Booked = new Boolean[12];
+            for (int i = 0; i < 12; i++)
+                Booked[i] = false;
+        }
 
         /// <summary>
         /// Create a new Course from the 4 lines
@@ -122,6 +153,9 @@ namespace Assignment
    
     }
 
+    /// <summary>
+    /// Static class containing extension methods for Entry Enumerations
+    /// </summary>
     public static class EntryExtension{
         /// <summary>
         /// Convert the Entry Enumeration to a single string

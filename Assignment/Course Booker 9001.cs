@@ -11,12 +11,19 @@ using System.IO;
 
 namespace Assignment
 {
+    /// <summary>
+    /// Main form for booking courses
+    /// </summary>
     public partial class Course_Booker_9001 : Form
     {
         private IEnumerable<Entry> entries;
         private IEnumerable<String> names;
+        
         private string defaultSave = "Courses.txt";
 
+        /// <summary>
+        /// Create new Course Booker form
+        /// </summary>
         public Course_Booker_9001()
         {
             InitializeComponent();
@@ -26,7 +33,9 @@ namespace Assignment
         //new
         private void menuItem2_Click(object sender, EventArgs e)
         {
-
+            NewCourses courseForm = new NewCourses();
+            entries = courseForm.ShowDialog();
+            ResetListbox();
         }
 
         //open
@@ -43,12 +52,7 @@ namespace Assignment
                     {
                         entries = Entry.OpenFile(stream);
                         label1.Text = "Courses:";
-                        names = entries.Select(entry => entry.Name).Distinct();
-                        listBox1.BeginUpdate();
-                        listBox1.Items.Clear();
-                        foreach (String name in names)
-                            listBox1.Items.Add(name);
-                        listBox1.EndUpdate();
+                        ResetListbox();
                         defaultSave = Path.GetFileName(openDialog.FileName);
                     }
                     catch (BookingException ex)
@@ -57,6 +61,17 @@ namespace Assignment
                     }
                 }
             }
+        }
+
+        //Method which reloads the list of courses in the listbox
+        private void ResetListbox()
+        {
+            names = entries.Select(entry => entry.Name).Distinct();
+            listBox1.BeginUpdate();
+            listBox1.Items.Clear();
+            foreach (String name in names)
+                listBox1.Items.Add(name);
+            listBox1.EndUpdate();
         }
 
         //save
@@ -79,15 +94,23 @@ namespace Assignment
             this.Close();
         }
 
+        //open the booking plan form upon doubleclick
         private void list_DoubleClick(object sender, EventArgs e)
         {
-            ListBox list = sender as ListBox;
-            if (list != null)
+            if (listBox1 != null)
             {
-                String name = list.SelectedItem.ToString();
-                using (BookingPlan booker = new BookingPlan(entries.Where(entry => entry.Name == name)))
+                if (listBox1.SelectedIndex != -1)
                 {
-                    booker.ShowDialog();
+                    //Check that an item was actually selected
+                    Rectangle selected = listBox1.GetItemRectangle(listBox1.SelectedIndex);
+                    if (selected.Contains(listBox1.PointToClient(Cursor.Position)))
+                    {
+                        String name = listBox1.SelectedItem.ToString();
+                        using (BookingPlan booker = new BookingPlan(entries.Where(entry => entry.Name == name)))
+                        {
+                            booker.ShowDialog();
+                        }
+                    }
                 }
             }
         }

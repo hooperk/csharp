@@ -18,12 +18,13 @@ namespace Assignment
     /// <author>Kenneth Hooper</author>
     class BookingPlan : Form
     {
-        private static readonly Color selected = Color.FromArgb(0, 255, 0);
-        private static readonly Font printFont = new Font("Arial", 11);
+        private static readonly Color Selected = Color.FromArgb(0, 255, 0);
+        private static readonly Font PrintFont = new Font("Arial", 11);
+        
+        private  String lecture = ""; 
+        
         private PrintPreviewDialog printDialog = new PrintPreviewDialog();
-
         private Entry[] classes;
-        private String lecture = "";
         private StringReader toPrint;
 
         /// <summary>
@@ -147,7 +148,7 @@ namespace Assignment
             string line = null;
 
             // Calculate the number of lines per page.
-            linesPerPage = ev.MarginBounds.Height / printFont.GetHeight(ev.Graphics);
+            linesPerPage = ev.MarginBounds.Height / PrintFont.GetHeight(ev.Graphics);
             entriesPerPage = (int)(linesPerPage / 4);
 
             // Print each line of the file. 
@@ -155,8 +156,8 @@ namespace Assignment
                 (line = toPrint.ReadLine()) != null)
             {
                 yPos = topMargin + (count *
-                   printFont.GetHeight(ev.Graphics));
-                ev.Graphics.DrawString(line, printFont, Brushes.Black,
+                   PrintFont.GetHeight(ev.Graphics));
+                ev.Graphics.DrawString(line, PrintFont, Brushes.Black,
                    leftMargin, yPos, new StringFormat());
                 count++;
             }
@@ -275,7 +276,7 @@ namespace Assignment
                     latest.Name = "seat" + ((i * 12) + j).ToString();
                     latest.Size = new System.Drawing.Size(28, 23);
                     latest.TabIndex = count++;//increment count after each button
-                    latest.BackColor = selected;
+                    latest.BackColor = Selected;
                     Toggle(latest, classes[i].Booked[j], j);
                     latest.Click += Seat_Click;
                     rowButtons.Add(latest);
@@ -340,6 +341,7 @@ namespace Assignment
             this.PerformLayout();
         }
 
+        //Memory for controls
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
