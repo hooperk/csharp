@@ -72,20 +72,34 @@ namespace Assignment
         //Add Course button
         private void button1_Click(object sender, EventArgs e)
         {
-            try
+            AddCourse();
+        }
+
+        //code that adds the course, seperate so I can add an enter event
+        private void AddCourse()
+        {
+            if (!String.IsNullOrWhiteSpace(textBox1.Text) && !String.IsNullOrWhiteSpace(textBox2.Text)
+                && !String.IsNullOrWhiteSpace(textBox3.Text))
             {
-                String price = textBox3.Text;
-                if (!Currency.Any(c => c == price[0]))
-                    price = "€" + textBox3.Text;//make sure a currency symbol is present, € as defaults
-                Entry newEntry = new Entry(textBox1.Text, textBox2.Text, price);
-                entries.Add(newEntry);
-                listBox1.Items.Add(DisplayEntry(newEntry));
-                textBox1.Text = textBox2.Text = textBox3.Text = "";//chain empty string assignment, make all boxes empty
-                SetLabel("Course Added");
+                try
+                {
+                    String price = textBox3.Text;
+                    if (!Currency.Any(c => c == price[0]))
+                        price = "€" + textBox3.Text;//make sure a currency symbol is present, € as defaults
+                    Entry newEntry = new Entry(textBox1.Text, textBox2.Text, price);
+                    entries.Add(newEntry);
+                    listBox1.Items.Add(DisplayEntry(newEntry));
+                    textBox1.Text = textBox2.Text = textBox3.Text = "";//chain empty string assignment, make all boxes empty
+                    SetLabel("Course Added");
+                }
+                catch (FormatException)
+                {
+                    SetLabel("Invalid Date");
+                }
             }
-            catch(FormatException)
+            else
             {
-                SetLabel("Invalid Date");
+                SetLabel("Must fill all fields");
             }
         }
 
@@ -103,13 +117,27 @@ namespace Assignment
         //event that resets the label
         private void resetEvent(object sender, EventArgs e)
         {
-
+            eventTimer.Stop();
+            eventTimer.Enabled = false;
+            label4.Text = LabelText;
         }
 
         //close button
         private void button2_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void textBox3_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == Convert.ToChar(Keys.Enter) || e.KeyChar == Convert.ToChar(Keys.Return))
+            {
+                AddCourse();
+            }
+            else if (!(e.KeyChar == '\b' || (e.KeyChar >= '0' && e.KeyChar <= '9') || (textBox3.SelectionStart == 0 && Currency.Any(c => c == e.KeyChar))))
+            {
+                e.Handled = true;
+            }
         }
     }
 }

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -39,6 +40,7 @@
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.button2 = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
+            this.mainMenu1 = new System.Windows.Forms.MainMenu(this.components);
             this.SuspendLayout();
             // 
             // label1
@@ -88,6 +90,7 @@
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(100, 20);
             this.textBox3.TabIndex = 5;
+            this.textBox3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox3_KeyPress);
             // 
             // button1
             // 
@@ -115,6 +118,7 @@
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(284, 134);
             this.listBox1.TabIndex = 8;
+            this.listBox1.Click += new System.EventHandler(this.listBox1_Click);
             // 
             // button2
             // 
@@ -151,6 +155,7 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.Menu = this.mainMenu1;
             this.Name = "NewCourses";
             this.Text = "NewCourses";
             this.ResumeLayout(false);
@@ -171,5 +176,6 @@
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.MainMenu mainMenu1;
     }
 }
