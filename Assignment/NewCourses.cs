@@ -134,7 +134,7 @@ namespace Assignment
             {
                 AddCourse();
             }
-            else if (e.KeyChar != '\b' && (e.KeyChar < '0' && e.KeyChar > '9') && !(textBox3.SelectionStart == 0 && Currency.Any(c => c == e.KeyChar)))
+            else if (e.KeyChar != '\b' && (e.KeyChar < '0' || e.KeyChar > '9') && !(textBox3.SelectionStart == 0 && Currency.Any(c => c == e.KeyChar)))
             {
                 e.Handled = true;
             }
