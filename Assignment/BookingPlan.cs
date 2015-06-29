@@ -152,7 +152,7 @@ namespace Assignment
             entriesPerPage = (int)(linesPerPage / 4);
 
             // Print each line of the file. 
-            while (count < linesPerPage && (count / 4) < entriesPerPage && //make sure the full entry will fit on a page
+            while ((count / 4) < entriesPerPage && //make sure the full entry will fit on a page
                 (line = toPrint.ReadLine()) != null)
             {
                 yPos = topMargin + (count *
