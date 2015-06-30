@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Assignment
 {
@@ -10,6 +11,8 @@ namespace Assignment
     /// </summary>
     public class Entry
     {
+        public static readonly Regex BookingSeats = new Regex(@"\"?[BF]{12}\"?");
+
         /// <summary>
         /// Course Name
         /// </summary>
@@ -55,6 +58,12 @@ namespace Assignment
             Name = name.Trim('"');
             Date = DateTime.Parse(date.Trim('"'));
             Price = price.Trim('"');
+            if (Name.Length == 0)
+                throw new ArgumentException("No Name Specified");
+            if (Price.Length == 0)
+                throw new ArgumentException("No Price Specified");
+            if(!BookingSeats.IsMatch(booked))
+                throw new ArgumentException("Invalid Booking Information");
             Booked = new Boolean[12];
             Char[] seats = booked.Trim('"').ToCharArray();
             for (int i = 0; i < 12; i++)
@@ -120,7 +129,7 @@ namespace Assignment
                     {
                         throw new BookingException(4, e.Message, e);
                     }
-                    catch (ArgumentNullException e)
+                    catch (ArgumentException e)
                     {
                         throw new BookingException(1, e.Message, e);
                     }
