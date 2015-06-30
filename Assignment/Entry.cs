@@ -11,7 +11,7 @@ namespace Assignment
     /// </summary>
     public class Entry
     {
-        public static readonly Regex BookingSeats = new Regex(@"""?[BF]{12}""?");
+        public static readonly Regex BookingSeats = new Regex(@"""[BF]{12}""|[BF]{12}");
 
         /// <summary>
         /// Course Name
@@ -80,7 +80,7 @@ namespace Assignment
         }
 
         /// <summary>
-        /// Returns the entry as a single strign of 4 lines
+        /// Returns the entry as a single string of 4 lines
         /// </summary>
         /// <returns>Name, Date, Price and booked seats on 1 line each</returns>
         public override String ToString(){
@@ -170,7 +170,7 @@ namespace Assignment
         /// Convert the Entry Enumeration to a single string
         /// </summary>
         /// <param name="self"></param>
-        /// <returns>String ready to output to </returns>
+        /// <returns>String ready to output to external file through a write</returns>
         public static String GetAllEntries(this IEnumerable<Entry> self)
         {
             StringBuilder output = new StringBuilder("");
