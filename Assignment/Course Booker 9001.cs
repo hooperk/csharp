@@ -51,7 +51,6 @@ namespace Assignment
                     try
                     {
                         entries = Entry.OpenFile(stream);
-                        label1.Text = "Courses:";
                         ResetListbox();
                         defaultSave = Path.GetFileName(openDialog.FileName);
                     }
@@ -66,6 +65,7 @@ namespace Assignment
         //Method which reloads the list of courses in the listbox
         private void ResetListbox()
         {
+            label1.Text = "Courses:";
             names = entries.Select(entry => entry.Name).Distinct();
             listBox1.BeginUpdate();
             listBox1.Items.Clear();
