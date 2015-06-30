@@ -11,7 +11,7 @@ namespace Assignment
     /// </summary>
     public class Entry
     {
-        public static readonly Regex BookingSeats = new Regex(@"\"?[BF]{12}\"?");
+        public static readonly Regex BookingSeats = new Regex(@"""?[BF]{12}""?");
 
         /// <summary>
         /// Course Name
@@ -26,7 +26,7 @@ namespace Assignment
         /// </summary>
         public String Price { get; set; }
         /// <summary>
-        /// Array of the available seats showign if they are already booked
+        /// Array of the available seats showing if they are already booked
         /// </summary>
         public Boolean[] Booked { get; set; }
 
